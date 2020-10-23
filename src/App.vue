@@ -1,16 +1,13 @@
 <template lang='html'>
   <main>
     <characters-list :characters='gotCharacters'></characters-list>
-    <ul>
-      <li v-for="(house,index) in gotHouses" :key="index">
-        {{house.name}} {{house.id}}
-      </li>
-    </ul>
+    <houses-list :houses='gotHouses'></houses-list>
   </main>
 </template>
 
 <script>
 import charactersList from './components/charactersList.vue';
+import housesList from './components/housesList.vue';
 
 export default {
   name: 'App',
@@ -65,7 +62,8 @@ export default {
     }
   },
   components: {
-  'characters-list': charactersList
+  'characters-list': charactersList,
+  'houses-list': housesList
   }
 }
 </script>
