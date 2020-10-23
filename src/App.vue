@@ -1,10 +1,6 @@
 <template lang='html'>
   <main>
-    <ul>
-      <li v-for="(character,index) in gotCharacters" v-if="character.name" :key="index">
-        {{character.name}} {{character.id}}
-      </li>
-    </ul>
+    <characters-list :characters='gotCharacters'></characters-list>
     <ul>
       <li v-for="(house,index) in gotHouses" :key="index">
         {{house.name}} {{house.id}}
@@ -14,13 +10,18 @@
 </template>
 
 <script>
+import charactersList from './components/charactersList.vue';
+
 export default {
+  name: 'App',
   data () {
     return {
       gotCharacters: [],
       gotHouses: [],
       gotBooks: [],
-      selectedCharacter: null
+      selectedCharacter: null,
+      selectedHouse: null,
+      selectedGreatHouse: null
     }
   },
   mounted () {
@@ -62,7 +63,9 @@ export default {
     getEndOfUrl: function (url) {
       return Number(url.substr(url.lastIndexOf('/')+1));
     }
-
+  },
+  components: {
+  'characters-list': charactersList
   }
 }
 </script>
