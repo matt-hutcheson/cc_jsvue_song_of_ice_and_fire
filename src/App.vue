@@ -1,13 +1,17 @@
 <template lang='html'>
   <main>
-    <characters-list :characters='gotCharacters'></characters-list>
-    <houses-list :houses='gotHouses'></houses-list>
+    <great-houses :greatHouses='greatHouses'></great-houses>
+    <section id='content-columns'>
+      <characters-list :characters='gotCharacters'></characters-list>
+      <houses-list :houses='gotHouses'></houses-list>
+    </section>
   </main>
 </template>
 
 <script>
 import charactersList from './components/charactersList.vue';
 import housesList from './components/housesList.vue';
+import greatHouses from './components/greatHouses.vue';
 
 export default {
   name: 'App',
@@ -16,6 +20,7 @@ export default {
       gotCharacters: [],
       gotHouses: [],
       gotBooks: [],
+      greatHouses: [],
       selectedCharacter: null,
       selectedHouse: null,
       selectedGreatHouse: null
@@ -63,7 +68,8 @@ export default {
   },
   components: {
   'characters-list': charactersList,
-  'houses-list': housesList
+  'houses-list': housesList,
+  'great-houses': greatHouses
   }
 }
 </script>
@@ -72,8 +78,11 @@ export default {
 main {
   width: 100vw;
   background-image: url(https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77702110892.jpg);
+  color: #e1eef6;
+}
+
+#content-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  color: #e1eef6;
 }
 </style>
