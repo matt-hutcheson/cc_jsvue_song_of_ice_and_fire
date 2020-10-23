@@ -23,7 +23,16 @@ export default {
       greatHouses: [],
       selectedCharacter: null,
       selectedHouse: null,
-      selectedGreatHouse: null
+      selectedGreatHouse: null,
+      arrynCheck: false,
+      baratheonCheck: false,
+      greyjoyCheck: false,
+      lannisterCheck: false,
+      martellCheck: false,
+      starkCheck: false,
+      tullyCheck: false,
+      tyrellCheck: false
+
     }
   },
   mounted () {
@@ -50,6 +59,33 @@ export default {
         .then(jresult => {for (const jhouse of jresult) {jhouse.id = this.getEndOfUrl(jhouse.url); this.gotHouses.push(jhouse)}})
         .then(() => this.gotHouses.sort(this.sortAlphabetical))
       }
+    },
+    checkIfGreatHouse: function (house) {
+      if (house.name === "House Arryn of the Eyrie" && !this.arrynCheck) {
+        this.greatHouses.push(house)
+        this.arrynCheck = true
+      } else if (house.name === "House Baratheon of Dragonstone" && !this.baratheonCheck) {
+        this.greatHouses.push(house)
+        this.baratheonCheck = true
+      } else if (house.name === "House Greyjoy of Pike" && !this.greyjoyCheck) {
+        this.greatHouses.push(house)
+        this.greyjoyCheck = true
+      } else if (house.name === "House Lannister of Casterly Rock" && !this.lannisterCheck) {
+        this.greatHouses.push(house)
+        this.lannisterCheck = true
+      } else if (house.name === "House Nymeros Martell of Sunspear" && !this.martellCheck) {
+        this.greatHouses.push(house)
+        this.martellCheck = true
+      } else if (house.name === "House Stark of Winterfell" && !this.starkCheck) {
+        this.greatHouses.push(house)
+        this.starkCheck = true
+      } else if (house.name === "House Tully of Riverrun" && !this.tullyCheck) {
+        this.greatHouses.push(house)
+        this.tullyCheck = true
+      } else if (house.name === "House Tyrell of Highgarden" && !this.tyrellCheck) {
+        this.greatHouses.push(house)
+        this.tyrellCheck = true
+      } 
     },
     sortAlphabetical: function(a,b) {
       const nameA = a.name.toUpperCase();
