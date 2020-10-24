@@ -8,6 +8,7 @@
 
 <script>
 import houseArryn from './greatHouses/houseArryn.vue';
+import {eventBus} from '../main.js';
 
 export default {
     name: 'great-houses',
@@ -19,8 +20,8 @@ export default {
     props: ['greatHouses'],
     methods: {
         handleGreatHouseClick: function(house) {
-            console.log(house.name)
             this.selectedGreatHouse = house
+            eventBus.$emit('great-house-selected', this.selectedGreatHouse)
         }
     }
 }

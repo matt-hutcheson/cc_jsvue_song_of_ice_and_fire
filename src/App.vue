@@ -16,6 +16,7 @@
 import greatHouses from './components/greatHouses.vue';
 import charactersList from './components/charactersList.vue';
 import housesList from './components/housesList.vue';
+import {eventBus} from './main.js'
 
 export default {
   name: 'App',
@@ -41,6 +42,9 @@ export default {
   mounted () {
     this.getAllCharacters();
     this.getAllHouses();
+    eventBus.$on('great-house-selected', (house) => {
+      this.selectedGreatHouse = house;
+    })
   },
   methods: {
     getAllCharacters: function () {
