@@ -1,17 +1,21 @@
 <template lang='html'>
   <main>
-    <great-houses :greatHouses='greatHouses'></great-houses>
-    <section id='content-columns'>
-      <characters-list :characters='gotCharacters'></characters-list>
-      <houses-list :houses='gotHouses'></houses-list>
-    </section>
+    <div id="main-background">
+      <h1>Game Of Thrones</h1>
+      <great-houses :greatHouses='greatHouses'></great-houses>
+      <article id='content-columns'>
+        <characters-list :characters='gotCharacters'></characters-list>
+        <houses-list :houses='gotHouses'></houses-list>
+        <img v-if="selectedGreatHouse" src="" :alt="selectedGreatHouse.name">
+      </article>
+    </div>
   </main>
 </template>
 
 <script>
+import greatHouses from './components/greatHouses.vue';
 import charactersList from './components/charactersList.vue';
 import housesList from './components/housesList.vue';
-import greatHouses from './components/greatHouses.vue';
 
 export default {
   name: 'App',
@@ -31,8 +35,7 @@ export default {
       martellCheck: false,
       starkCheck: false,
       tullyCheck: false,
-      tyrellCheck: false
-
+      tyrellCheck: false,
     }
   },
   mounted () {
@@ -56,8 +59,9 @@ export default {
       for (const page of pages) {
         fetch(`https://www.anapioficeandfire.com/api/houses?page=${page}&pageSize=50`)
         .then(result => result.json())
-        .then(jresult => {for (const jhouse of jresult) {jhouse.id = this.getEndOfUrl(jhouse.url); this.gotHouses.push(jhouse)}})
+        .then(jresult => {for (const jhouse of jresult) {jhouse.id = this.getEndOfUrl(jhouse.url); this.gotHouses.push(jhouse); this.checkIfGreatHouse(jhouse)}})
         .then(() => this.gotHouses.sort(this.sortAlphabetical))
+        .then(() => this.greatHouses.sort(this.sortAlphabetical))
       }
     },
     checkIfGreatHouse: function (house) {
@@ -67,7 +71,7 @@ export default {
       } else if (house.name === "House Baratheon of Dragonstone" && !this.baratheonCheck) {
         this.greatHouses.push(house)
         this.baratheonCheck = true
-      } else if (house.name === "House Greyjoy of Pike" && !this.greyjoyCheck) {
+      } else if (house.name === "House Greyjoy of Pyke" && !this.greyjoyCheck) {
         this.greatHouses.push(house)
         this.greyjoyCheck = true
       } else if (house.name === "House Lannister of Casterly Rock" && !this.lannisterCheck) {
@@ -103,22 +107,45 @@ export default {
     }
   },
   components: {
-  'characters-list': charactersList,
-  'houses-list': housesList,
-  'great-houses': greatHouses
+    'great-houses': greatHouses,
+    'characters-list': charactersList,
+    'houses-list': housesList,
   }
 }
 </script>
 
-<style lang='css' scoped>
+<style lang='css'>
+@font-face {
+  font-family: "GoT";
+  src: local("GoT"),
+  url(./assets/fonts/Game_of_Thrones.ttf) format("truetype");
+}
+
 main {
   width: 100vw;
-  background-image: url(https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77702110892.jpg);
+  min-height: 100vh;
+  margin: 0;
+  background-color: rgb(5, 4, 4);
   color: #e1eef6;
+}
+
+#main-background {
+  background: url(https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77702110892.jpg) no-repeat center center fixed;
+  background-size: cover
+}
+
+h1 {
+  font-family: "GoT", Helvetica, Arial;
+  font-size: xxx-large;
+  text-align: center;
+  text-shadow: 4px 0 0 #004e66, -4px 0 0 #004e66, 0 4px 0 #004e66, 0 -4px 0 #004e66, 1px 1px #004e66, -1px -1px 0 #004e66, 1px -1px 0 #004e66, -1px 1px 0 #004e66;
+  margin-top: 0;
+  padding: 1em;
 }
 
 #content-columns {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 }
+
 </style>

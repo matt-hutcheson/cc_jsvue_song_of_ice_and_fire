@@ -4,6 +4,7 @@
 
 <script>
 export default {
+    name: 'house-arryn',
     props: ['houseArryn']
 
 }

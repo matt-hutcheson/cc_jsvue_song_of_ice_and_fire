@@ -1,4 +1,4 @@
-<template langg='html'>
+<template lang='html'>
   <article>
     <ul>
       <li v-for="(house,index) in houses" :key="index">
@@ -10,6 +10,7 @@
 
 <script>
 export default {
+    name: 'houses-list',
     props: ['houses']
 
 }
