@@ -4,8 +4,8 @@
       <h1>Game Of Thrones</h1>
       <great-houses :greatHouses='greatHouses'></great-houses>
       <article id='content-columns'>
-        <characters-list :characters='gotCharacters'></characters-list>
-        <houses-list :houses='gotHouses'></houses-list>
+        <characters-list v-if="characters.length" :characters='characters'></characters-list>
+        <houses-list v-if="houses.length" :houses='houses'></houses-list>
         <img v-if="selectedGreatHouse" src="" :alt="selectedGreatHouse.name">
       </article>
     </div>
@@ -30,6 +30,8 @@ export default {
       selectedHouse: null,
       selectedGreatHouse: null,
       characters: [],
+      houses: [],
+
       arrynCheck: false,
       baratheonCheck: false,
       greyjoyCheck: false,
@@ -46,7 +48,9 @@ export default {
     eventBus.$on('great-house-selected', (house) => {
       this.selectedGreatHouse = house
       this.characters = []
-      this.getCharactersOfHouse()
+      this.houses = []
+      this.getCharactersOfGreatHouse()
+      this.getHousesOfGreatHouse()
     })
   },
   methods: {
@@ -112,7 +116,7 @@ export default {
     getEndOfUrl: function (url) {
       return Number(url.substr(url.lastIndexOf('/')+1));
     },
-    getCharactersOfHouse: function () {
+    getCharactersOfGreatHouse: function () {
       for (const character of this.gotCharacters) {
         if (character.allegiances.length) {
           for (const houseUrl of character.allegiances) {
@@ -120,6 +124,13 @@ export default {
               this.characters.push(character)
             }
           }
+        }
+      }
+    },
+    getHousesOfGreatHouse: function () {
+      for (const house of this.gotHouses) {
+        if (house.overlord === this.selectedGreatHouse.url) {
+          this.houses.push(house)
         }
       }
     }
@@ -148,6 +159,8 @@ main {
 }
 
 #main-background {
+  width: 100vw;
+  min-height: 100vh;
   background: url(https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77702110892.jpg) no-repeat center center fixed;
   background-size: cover
 }
