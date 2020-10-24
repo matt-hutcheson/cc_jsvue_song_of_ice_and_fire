@@ -29,6 +29,7 @@ export default {
       selectedCharacter: null,
       selectedHouse: null,
       selectedGreatHouse: null,
+      characters: [],
       arrynCheck: false,
       baratheonCheck: false,
       greyjoyCheck: false,
@@ -43,7 +44,9 @@ export default {
     this.getAllCharacters();
     this.getAllHouses();
     eventBus.$on('great-house-selected', (house) => {
-      this.selectedGreatHouse = house;
+      this.selectedGreatHouse = house
+      this.characters = []
+      this.getCharactersOfHouse()
     })
   },
   methods: {
@@ -108,6 +111,17 @@ export default {
     },
     getEndOfUrl: function (url) {
       return Number(url.substr(url.lastIndexOf('/')+1));
+    },
+    getCharactersOfHouse: function () {
+      for (const character of this.gotCharacters) {
+        if (character.allegiances.length) {
+          for (const houseUrl of character.allegiances) {
+            if (houseUrl === this.selectedGreatHouse.url) {
+              this.characters.push(character)
+            }
+          }
+        }
+      }
     }
   },
   components: {
