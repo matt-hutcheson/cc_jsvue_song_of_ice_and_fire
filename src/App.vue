@@ -2,12 +2,15 @@
   <main>
     <div id="main-background">
       <h1>Game Of Thrones</h1>
-      <great-houses :greatHouses='greatHouses'></great-houses>
+      <great-houses :greatHouses='greatHouses' class="great-houses"></great-houses>
       <article id='content-columns'>
-        <characters-list v-if="characters.length" :characters='characters' :selectedHouse='selectedGreatHouse'></characters-list>
-        <character-details v-if="selectedCharacter" :character="selectedCharacter"></character-details>
-        <houses-list v-if="houses.length" :houses='houses' :selectedHouse='selectedGreatHouse'></houses-list>
-        <img v-if="selectedGreatHouse" src="" :alt="selectedGreatHouse.name">
+        <characters-list v-if="characters.length" :characters='characters' :selectedHouse='selectedGreatHouse' class="scroll-list"></characters-list>
+        <character-details v-if="selectedCharacter" :character="selectedCharacter" class="scroll-list"></character-details>
+        <div v-if="!selectedCharacter"></div>
+        <houses-list v-if="houses.length" :houses='houses' :selectedHouse='selectedGreatHouse' class="scroll-list"></houses-list>
+        <house-details v-if="selectedHouse" :house="selectedHouse"></house-details>
+        <div v-if="!selectedHouse"></div>
+        <banners v-if="selectedGreatHouse" :selectedGreatHouse='selectedGreatHouse'></banners>
       </article>
     </div>
   </main>
@@ -17,7 +20,9 @@
 import greatHouses from './components/greatHouses.vue';
 import charactersList from './components/charactersList.vue';
 import housesList from './components/housesList.vue';
-import characterDetails from './components/characterDetails'
+import characterDetails from './components/characterDetails.vue';
+import houseDetails from './components/houseDetails';
+import banners from './components/banners.vue'
 import {eventBus} from './main.js'
 
 export default {
@@ -51,11 +56,16 @@ export default {
       this.selectedGreatHouse = house
       this.characters = []
       this.houses = []
+      this.selectedCharacter = null
+      this.selectedHouse = null
       this.getCharactersOfGreatHouse()
       this.getHousesOfGreatHouse()
     });
     eventBus.$on('character-selected', (character) => {
       this.selectedCharacter = character
+    })
+    eventBus.$on('house-selected', (house) => {
+      this.selectedHouse = house
     })
   },
   methods: {
@@ -144,7 +154,9 @@ export default {
     'great-houses': greatHouses,
     'characters-list': charactersList,
     'houses-list': housesList,
-    'character-details': characterDetails
+    'character-details': characterDetails,
+    'banners': banners,
+    'house-details': houseDetails
   }
 }
 </script>
@@ -156,22 +168,29 @@ export default {
   url(./assets/fonts/Game_of_Thrones.ttf) format("truetype");
 }
 
+body {
+  margin: 0;
+}
+
 main {
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   margin: 0;
   background-color: rgb(5, 4, 4);
   color: #e1eef6;
 }
 
 #main-background {
-  width: 100vw;
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
   background: url('./assets/images/GoT_crow_dragon_background.jpg') no-repeat center center fixed;
-  background-size: cover
+  background-size: cover;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 h1 {
+  height: 2vh;
   font-family: "GoT", Helvetica, Arial;
   font-size: xxx-large;
   text-align: center;
@@ -180,9 +199,18 @@ h1 {
   padding: 1em;
 }
 
+.great-houses {
+  height: 10vh;
+}
+
 #content-columns {
+  height: 80vh;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.scroll-list {
+  overflow-y: auto;
 }
 
 </style>

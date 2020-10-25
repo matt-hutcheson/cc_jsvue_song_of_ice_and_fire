@@ -24,6 +24,10 @@ export default {
 
 <style lang='css' scoped>
 
+article {
+  height: 100%;
+}
+
 li:hover {
   cursor: pointer;
   color: #fcbe32;
