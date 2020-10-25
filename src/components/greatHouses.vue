@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import houseArryn from './greatHouses/houseArryn.vue';
 import {eventBus} from '../main.js';
 
 export default {

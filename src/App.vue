@@ -4,8 +4,9 @@
       <h1>Game Of Thrones</h1>
       <great-houses :greatHouses='greatHouses'></great-houses>
       <article id='content-columns'>
-        <characters-list v-if="characters.length" :characters='characters'></characters-list>
-        <houses-list v-if="houses.length" :houses='houses'></houses-list>
+        <characters-list v-if="characters.length" :characters='characters' :selectedHouse='selectedGreatHouse'></characters-list>
+        <character-details v-if="selectedCharacter" :character="selectedCharacter"></character-details>
+        <houses-list v-if="houses.length" :houses='houses' :selectedHouse='selectedGreatHouse'></houses-list>
         <img v-if="selectedGreatHouse" src="" :alt="selectedGreatHouse.name">
       </article>
     </div>
@@ -16,6 +17,7 @@
 import greatHouses from './components/greatHouses.vue';
 import charactersList from './components/charactersList.vue';
 import housesList from './components/housesList.vue';
+import characterDetails from './components/characterDetails'
 import {eventBus} from './main.js'
 
 export default {
@@ -139,6 +141,7 @@ export default {
     'great-houses': greatHouses,
     'characters-list': charactersList,
     'houses-list': housesList,
+    'character-details': characterDetails
   }
 }
 </script>
@@ -161,7 +164,7 @@ main {
 #main-background {
   width: 100vw;
   min-height: 100vh;
-  background: url(https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77702110892.jpg) no-repeat center center fixed;
+  background: url('./assets/images/GoT_crow_dragon_background.jpg') no-repeat center center fixed;
   background-size: cover
 }
 
@@ -176,7 +179,7 @@ h1 {
 
 #content-columns {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 </style>
