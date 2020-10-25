@@ -53,6 +53,9 @@ export default {
       this.houses = []
       this.getCharactersOfGreatHouse()
       this.getHousesOfGreatHouse()
+    });
+    eventBus.$on('character-selected', (character) => {
+      this.selectedCharacter = character
     })
   },
   methods: {
