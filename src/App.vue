@@ -8,7 +8,7 @@
         <character-details v-if="selectedCharacter" :character="selectedCharacter" class="scroll-list"></character-details>
         <div v-if="!selectedCharacter"></div>
         <houses-list v-if="houses.length" :houses='houses' :selectedHouse='selectedGreatHouse' class="scroll-list"></houses-list>
-        <house-details v-if="selectedHouse" :house="selectedHouse"></house-details>
+        <house-details :characters="gotCharacters"></house-details>
         <div v-if="!selectedHouse"></div>
         <banners v-if="selectedGreatHouse" :selectedGreatHouse='selectedGreatHouse'></banners>
       </article>
@@ -63,9 +63,6 @@ export default {
     });
     eventBus.$on('character-selected', (character) => {
       this.selectedCharacter = character
-    })
-    eventBus.$on('house-selected', (house) => {
-      this.selectedHouse = house
     })
   },
   methods: {
